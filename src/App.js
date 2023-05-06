@@ -5,6 +5,7 @@ import Home from './Pages/Home';
 import Contact from './Pages/Contact';
 import Starred from './Pages/Starred';
 import PageLayOut from './Components/PageLayOut';
+import Show from './Pages/Show';
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/starred' element={<Starred />} />
           </Route>
-          <Route path='/contact' element={<Contact />} />
+          <Route path='/show/:showId' element={<Show />} />
+          <Route path='*' element={<div>Not Found</div>}/>
         </Routes>
       </BrowserRouter>
 
