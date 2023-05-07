@@ -4,27 +4,40 @@ import { SearchForShows ,SearchForPeople } from '../api/TvMaze'
 import SearchForm from '../Components/SearchForm';
 import ShowGrid from '../Components/Shows/ShowGrid';
 import ActorGrid from '../Components/Actors/ActorGrid';
+import { useQuery } from '@tanstack/react-query';
 
 const Home = () => {
+
+  const [filter,setFilter]=useState(null)
+
+  const {data:apiData,error:apiDataError}=useQuery({
+    queryKey:['search',filter],
+    queryFn:()=>
+    filter.searchOption==='shows'
+    ?SearchForShows(filter.q)
+    :SearchForPeople(filter.q),
+    enabled:!!filter,
+    refetchOnWindowFocus:false
+  })
   
-  const [apiData, setApiData] = useState(null);
-  const [apiDataError, setApiDataError] = useState(null);
+  // const [apiData, setApiData] = useState(null);
+  // const [apiDataError, setApiDataError] = useState(null);
   
   const OnSearch = async ({q,searchOption}) => {
-    
-    try {
-      setApiDataError(null)
-      if(searchOption==='shows'){
-        const result = await SearchForShows(q)
-        setApiData(result)
-      }
-      else{
-      const result = await SearchForPeople(q)
-      setApiData(result)
-      }
-    } catch (error) {
-      setApiDataError(error)
-    }
+    setFilter({q,searchOption})
+  //   try {
+  //     setApiDataError(null)
+  //     if(searchOption==='shows'){
+  //       const result = await SearchForShows(q)
+  //       setApiData(result)
+  //     }
+  //     else{
+  //     const result = await SearchForPeople(q)
+  //     setApiData(result)
+  //     }
+  //   } catch (error) {
+  //     setApiDataError(error)
+  //   }
   }
 
   const RenderApiData = () => {
