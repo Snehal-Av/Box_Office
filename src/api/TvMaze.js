@@ -9,4 +9,4 @@ export const SearchForShows=(query)=>(getApi(`/search/shows?q=${query}`))
 
 export const SearchForPeople=(query)=>(getApi(`/search/people?q=${query}`))
 
-export const GetShowById=(showId)=>(getApi(`/shows/${showId}`))
+export const GetShowById=(showId)=>(getApi(`/shows/${showId}?embed[]=seasons&embed[]=cast`))
