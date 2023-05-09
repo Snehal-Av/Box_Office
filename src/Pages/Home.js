@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useReducer } from 'react'
 // import { Link } from 'react-router-dom'
 import { SearchForShows ,SearchForPeople } from '../api/TvMaze'
 import SearchForm from '../Components/SearchForm';
@@ -6,9 +6,34 @@ import ShowGrid from '../Components/Shows/ShowGrid';
 import ActorGrid from '../Components/Actors/ActorGrid';
 import { useQuery } from '@tanstack/react-query';
 
+
+const ReducerFn=(currentCounter,action)=>{
+  switch (action.type) {
+    case 'INCREMENT':
+     return currentCounter +1
+    case 'DECREMENT':
+     return currentCounter -1
+    case 'RESET':
+      return 0
+    
+  }
+  return 0
+}
 const Home = () => {
 
   const [filter,setFilter]=useState(null)
+
+  const[counter,dispatch]=useReducer(ReducerFn,0)
+  
+  const OnIncrement=()=>{
+    dispatch({type:'INCREMENT'})
+  }
+  const OnDecrement=()=>{
+    dispatch({type:'DECREMENT'})
+  }
+  const OnReset=()=>{
+    dispatch({type:'RESET'})
+  }
 
   const {data:apiData,error:apiDataError}=useQuery({
     queryKey:['search',filter],
@@ -59,6 +84,15 @@ const Home = () => {
   return (
     <div>
       <SearchForm OnSearch={OnSearch}/>
+
+      <div>
+        Counter:{counter}
+      </div>
+      <button type='button' onClick={OnIncrement}>Increment</button>
+      <button type='button' onClick={OnDecrement}>Decrement</button>
+      <button type='button' onClick={OnReset}>Reset</button>
+
+
       {/* <form onSubmit={OnSearch}>
         <input type='text' value={searchInput} onChange={SearchHandler} />
         <label>

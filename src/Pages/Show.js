@@ -8,6 +8,7 @@ import Seasions from '../Components/Shows/Seasions'
 import Cast from '../Components/Shows/Cast'
 
 
+
 // const useShowById=(showId)=>{
 
 //   const[showData,setShowData]=useState(null);
@@ -32,7 +33,8 @@ const Show = () => {
   const { showId } = useParams()
 
   const navigate=useNavigate()
-  
+
+ 
   const{data:showData,error:showError}=useQuery({
     queryKey:['show',showId],
     queryFn:()=>GetShowById(showId),
