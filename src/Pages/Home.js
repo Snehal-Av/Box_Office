@@ -1,39 +1,40 @@
-import React, { useState,useReducer } from 'react'
+import React, { useState } from 'react'
 // import { Link } from 'react-router-dom'
 import { SearchForShows ,SearchForPeople } from '../api/TvMaze'
 import SearchForm from '../Components/SearchForm';
 import ShowGrid from '../Components/Shows/ShowGrid';
 import ActorGrid from '../Components/Actors/ActorGrid';
 import { useQuery } from '@tanstack/react-query';
+import {styled} from 'styled-components'
 
 
-const ReducerFn=(currentCounter,action)=>{
-  switch (action.type) {
-    case 'INCREMENT':
-     return currentCounter +1
-    case 'DECREMENT':
-     return currentCounter -1
-    case 'RESET':
-      return 0
+// const ReducerFn=(currentCounter,action)=>{
+//   switch (action.type) {
+//     case 'INCREMENT':
+//      return currentCounter +1
+//     case 'DECREMENT':
+//      return currentCounter -1
+//     case 'RESET':
+//       return 0
     
-  }
-  return 0
-}
+//   }
+//   return 0
+// }
 const Home = () => {
 
   const [filter,setFilter]=useState(null)
 
-  const[counter,dispatch]=useReducer(ReducerFn,0)
+  // const[counter,dispatch]=useReducer(ReducerFn,0)
   
-  const OnIncrement=()=>{
-    dispatch({type:'INCREMENT'})
-  }
-  const OnDecrement=()=>{
-    dispatch({type:'DECREMENT'})
-  }
-  const OnReset=()=>{
-    dispatch({type:'RESET'})
-  }
+  // const OnIncrement=()=>{
+  //   dispatch({type:'INCREMENT'})
+  // }
+  // const OnDecrement=()=>{
+  //   dispatch({type:'DECREMENT'})
+  // }
+  // const OnReset=()=>{
+  //   dispatch({type:'RESET'})
+  // }
 
   const {data:apiData,error:apiDataError}=useQuery({
     queryKey:['search',filter],
@@ -68,11 +69,11 @@ const Home = () => {
   const RenderApiData = () => {
 
     if (apiDataError) {
-      return <div>Error Occurred:{apiDataError.message}</div>
+      return <TextCenter>Error Occurred:{apiDataError.message}</TextCenter>
     }
 
     if(apiData?.length==0){
-      return <div>No Result</div>
+      return <TextCenter>No Result</TextCenter>
     }
 
     if (apiData) {
@@ -85,12 +86,12 @@ const Home = () => {
     <div>
       <SearchForm OnSearch={OnSearch}/>
 
-      <div>
+      {/* <div>
         Counter:{counter}
       </div>
       <button type='button' onClick={OnIncrement}>Increment</button>
       <button type='button' onClick={OnDecrement}>Decrement</button>
-      <button type='button' onClick={OnReset}>Reset</button>
+      <button type='button' onClick={OnReset}>Reset</button> */}
 
 
       {/* <form onSubmit={OnSearch}>
@@ -117,3 +118,7 @@ const Home = () => {
 }
 
 export default Home
+
+const TextCenter = styled.div`
+  text-align: center;
+`;

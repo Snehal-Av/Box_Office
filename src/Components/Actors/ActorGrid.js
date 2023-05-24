@@ -1,9 +1,9 @@
 import React from 'react'
 import ActorCard from './ActorCard'
-
+import {styled} from 'styled-components'
 const ActorGrid = ({actors}) => {
   return (
-    <div>
+    <FlexGrid>
         {
         actors.map((data)=>(
            <ActorCard 
@@ -19,8 +19,16 @@ const ActorGrid = ({actors}) => {
            /> 
         ))
        }
-    </div>
+    </FlexGrid>
   )
 }
 
 export default ActorGrid
+
+const FlexGrid = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+ 
+`;
